@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #83a4d4, #b6fbff);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  background-color: white;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+input {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 65%;
+  margin-right: 0.5rem;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.weather-info {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f7faff;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.weather-info h2 {
+  margin-bottom: 1rem;
+  color: #222;
+  font-weight: 600;
+}
+
+.weather-info p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+}
+
+.weather-info img {
+  margin-top: 0.5rem;
+  width: 64px;
+  height: 64px;
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
+}
+
+/* Default Background */
+.default-bg {
+  background: linear-gradient(to right, #83a4d4, #b6fbff);
+}
+
+.sunny-bg {
+  background-image: url('/public/images/Beach.jpg');
+  /* ✅ correct path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.night-bg {
+  background-image: url('/public/images/owl.jpg');
+  /* ✅ correct path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* Optional overlay for readability */
+.app-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  /* semi-transparent white */
+  backdrop-filter: blur(4px);
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.app-background {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+}
+
+.app-container {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.background-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.app-container {
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
