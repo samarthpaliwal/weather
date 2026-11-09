@@ -1,72 +1,70 @@
-# Getting Started with Create React App
+# Weather App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A single-page React application that looks up the current weather for a city. You type a city name, the app calls the WeatherAPI.com `current.json` endpoint, and it shows location, temperature in Celsius, condition text and icon, humidity and wind speed. The page background switches to a night image after dark and to a beach image when the condition is sunny. The project was bootstrapped with Create React App (`react-scripts` 5).
 
-## Available Scripts
+## Requirements
 
-In the project directory, you can run:
+- Node.js 18 or newer and npm
+- A free API key from https://www.weatherapi.com/
 
-### `npm start`
+## Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+git clone https://github.com/samarthpaliwal/weather.git
+cd weather
+npm install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The WeatherAPI key is currently a hard-coded constant `API_KEY` near the top of `src/App.js`. Replace it with your own key before running. Because the key is in client-side code (and in git history), treat it as public and keep it on a free, rate-limited plan.
 
-### `npm test`
+A cleaner approach, which the code does not do yet, is to read it from an environment variable that Create React App exposes at build time:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```env
+# .env (local only, not committed)
+REACT_APP_WEATHER_API_KEY=your_weatherapi_key_here
+```
 
-### `npm run build`
+and in `src/App.js` use `const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Usage
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Open http://localhost:3000. Enter a city name and click **Get Weather**. On success the panel shows the city and country, temperature, condition, humidity and wind speed. If WeatherAPI returns an error (unknown city) the app shows "City not found"; a network failure shows "Failed to fetch weather data."
 
-### `npm run eject`
+Other scripts from Create React App:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm run build   # production build to build/
+npm test        # Jest watch mode (see note below)
+npm run eject   # one-way: copies CRA config into the project
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Note: `src/App.test.js` is the unmodified CRA template test that looks for a "learn react" link, so it fails against this app.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## How it works
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- `src/index.js` mounts `App` into `#root` from `public/index.html` and calls `reportWebVitals()`.
+- `src/App.js` keeps three pieces of state with `useState`: the typed city, the parsed weather response and an error string. `fetchWeather` does a `fetch` to `https://api.weatherapi.com/v1/current.json?key=...&q=<city>` and stores `data` or sets an error.
+- `getBackgroundImage` picks `/images/owl.jpg` when `current.is_day === 0`, `/images/beach.jpg` when the condition text contains "sunny", otherwise no image. The file in `public/images/` is named `Beach.jpg` with a capital B; on case-sensitive hosts the sunny background will not load until the name or the path is made to match.
+- Styling lives in `src/App.css` and `src/index.css`.
 
-## Learn More
+## Project layout
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-Also we need a node_modules
+```
+weather/
+├── public/
+│   ├── index.html
+│   ├── images/Beach.jpg, owl.jpg   # background images
+│   └── manifest.json, favicon, logos
+├── src/
+│   ├── index.js            # React root
+│   ├── App.js              # UI, fetch call, background logic
+│   ├── App.css, index.css
+│   ├── App.test.js         # CRA template test (not updated)
+│   ├── reportWebVitals.js
+│   └── setupTests.js
+└── package.json            # react-scripts start/build/test/eject
+```
